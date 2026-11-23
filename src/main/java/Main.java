@@ -5,6 +5,8 @@ import zero.Key;
 
 public class Main extends GameApp {
     private Player player;
+    private Coin coin;
+    private int points;
 
     @Override public void settings() {
         padding(20);
@@ -13,6 +15,7 @@ public class Main extends GameApp {
 
     @Override public void setup() {
         player = new Player(40, 180);
+        coin = new Coin(220,180);
     }
 
     @Override public void update(double seconds) {
@@ -23,6 +26,11 @@ public class Main extends GameApp {
         if (keyDown(Key.UP)) vertical--;
         if (keyDown(Key.DOWN)) vertical++;
         player.update(horizontal, vertical, seconds, width(), height());
+        if (!coin.isCollected() && coin.touches(player)) {
+            coin.collect();
+            points++;
+        }
+
     }
 
     @Override public void draw() {
@@ -30,6 +38,8 @@ public class Main extends GameApp {
         fill(Color.rgb(47, 79, 79));
         textSize(20);
         text("Click the canvas, then hold the arrow keys.", 20, 30);
+        text("Score: " + points, 20, 60);
+        coin.draw(this);
         player.draw(this);
     }
 

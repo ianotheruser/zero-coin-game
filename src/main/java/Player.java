@@ -1,8 +1,6 @@
 import zero.GameApp;
 import zero.Color;
 
-
-
 public class Player {
     private double x;
     private double y;
@@ -24,5 +22,9 @@ public class Player {
     public void draw(GameApp app) {
         app.fill(Color.rgb(100, 149, 237));
         app.rect(x, y, size, size);
+    }
+
+    public boolean touches(double otherX, double otherY, double otherSize) {
+        return x + size >= otherX && x <= otherX + otherSize && y + size >= otherY && y <= otherY + otherSize;
     }
 }
